@@ -180,4 +180,4 @@ if __name__ == '__main__':
   if 'mnist' in args.datasets:
     download_mnist('./data')
   if 'fashion' in args.datasets:
-    download_fashion_mnist('./data')
+    download_fashion_mnist('/kaggle/working/G-PATE')
