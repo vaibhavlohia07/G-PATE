@@ -7,7 +7,7 @@ from tensorflow.python.framework import ops
 from utils import *
 
 try:
-  image_summary = tf.image_summary
+  image_summary = tf.summary.image
   scalar_summary = tf.scalar_summary
   histogram_summary = tf.histogram_summary
   merge_summary = tf.merge_summary
