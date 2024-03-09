@@ -5,7 +5,7 @@ import numpy as np
 from model import DCGAN
 from utils import pp, visualize, to_json, show_all_variables, mkdir
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import argparse
 from gen_data import batch2str
 import sys
