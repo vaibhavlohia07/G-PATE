@@ -10,7 +10,8 @@ try:
   image_summary = tf.summary.image
   scalar_summary = tf.summary.scalar
   histogram_summary = tf.summary.histogram
-  merge_summary = tf.summary.merge
+  merged_summary = tf.summary.merge_all()
+
   SummaryWriter = tf.train.SummaryWriter
 except:
   image_summary = tf.summary.image
