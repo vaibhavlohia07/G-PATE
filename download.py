@@ -176,8 +176,8 @@ if __name__ == '__main__':
   prepare_data_dir()
 
   if 'lsun' in args.datasets:
-    download_lsun('./data')
+    download_lsun('/kaggle/working/G-PATE')
   if 'mnist' in args.datasets:
-    download_mnist('./data')
+    download_mnist('/kaggle/working/G-PATE')
   if 'fashion' in args.datasets:
     download_fashion_mnist('/kaggle/working/G-PATE')
