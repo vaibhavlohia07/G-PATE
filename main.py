@@ -96,7 +96,7 @@ def main(_):
         FLAGS.learning_rate = 5e-5
         FLAGS.step_size = 5e-4
 
-    with tf.Session(config=run_config) as sess:
+    with tf.compat.v1.Session(config=run_config) as sess:
 
         dcgan = DCGAN(
             sess,
