@@ -13,7 +13,7 @@ import pickle
 
 # os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
-flags = tf.app.flags
+flags = tf.compat.v1.flags
 flags.DEFINE_integer("epoch", 1000, "Epoch for training teacher models")
 flags.DEFINE_integer("g_epoch", 500, "Epoch for training the student models")
 flags.DEFINE_float("learning_rate", 1e-3, "Learning rate of for adam")
