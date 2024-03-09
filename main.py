@@ -84,8 +84,8 @@ def main(_):
         os.makedirs(FLAGS.sample_dir)
 
     # gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
-    run_config = tf.compat.v1.ConfigProto
-    tf.compat.v1.GPUOptions(allow_growth=True)
+    config = tf.compat.v1.ConfigProto()
+    config.gpu_options.allow_growth = True
 
     if FLAGS.thresh == 0:
         thresh = None
@@ -96,7 +96,7 @@ def main(_):
         FLAGS.learning_rate = 5e-5
         FLAGS.step_size = 5e-4
 
-    with tf.compat.v1.Session(config=run_config) as sess:
+    with tf.compat.v1.Session(config=config) as sess:
 
         dcgan = DCGAN(
             sess,
