@@ -84,8 +84,8 @@ def main(_):
         os.makedirs(FLAGS.sample_dir)
 
     # gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
-    run_config =  tf.compat.v1.GPUOptions(per_process_gpu_memory_fraction=0.333)
-    run_config.gpu_options.allow_growth = True
+    run_config = tf.ConfigProto()
+    tf.compat.v1.GPUOptions(allow_growth=True)
 
     if FLAGS.thresh == 0:
         thresh = None
