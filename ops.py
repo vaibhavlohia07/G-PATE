@@ -11,7 +11,7 @@ try:
   scalar_summary = tf.summary.scalar
   histogram_summary = tf.summary.histogram
   merged_summary = tf.compat.v1.summary.merge_all
-  SummaryWriter = tf.summary.SummaryWriter
+  SummaryWriter = tf.summary.FileWriter
 except:
   image_summary = tf.summary.image
   scalar_summary = tf.summary.scalar
