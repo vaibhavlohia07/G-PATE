@@ -14,7 +14,7 @@ from utils import *
 from rdp_utils import *
 from pate_core import *
 import pickle
-from keras.utils import np_utils
+from keras.utils import to_categorical
 # import pandas as pd
 import torch
 import torch.utils.data
