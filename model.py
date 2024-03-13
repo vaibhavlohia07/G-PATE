@@ -617,9 +617,9 @@ class DCGAN(object):
         else:
             image_dims = [self.input_height, self.input_width, self.c_dim]
 
-        self.inputs = tf.placeholder(
+        self.inputs = tf.compat.v1.placeholder(
             tf.float32, [self.batch_size] + [self.input_height, self.input_width, self.c_dim], name='real_images')
-        self.y = tf.placeholder(tf.float32, [self.batch_size, self.y_dim], name='y')
+        self.y = tf.compat.v1.placeholder(tf.float32, [self.batch_size, self.y_dim], name='y')
 
         self.image_dims = image_dims
 
@@ -628,14 +628,14 @@ class DCGAN(object):
             inputs = tf.image.resize_image_with_crop_or_pad(inputs, target_height=self.output_height,
                                                             target_width=self.output_width)
 
-        self.z = tf.placeholder(tf.float32, [self.batch_size, self.z_dim], name='z')
+        self.z = tf.compat.v1.placeholder(tf.float32, [self.batch_size, self.z_dim], name='z')
         self.z_sum = histogram_summary("z", self.z)
 
         self.G = self.generator(self.z, self.y)
         if 'slt' in self.dataset_name or 'cifar' in self.dataset_name:
             self.G_sum = image_summary("G", self.G, max_outputs=10)
 
-        self.updated_img = tf.placeholder(tf.float32, [self.batch_size] + image_dims, name='updated_img')
+        self.updated_img = tf.compat.v1.placeholder(tf.float32, [self.batch_size] + image_dims, name='updated_img')
         self.g_loss = tf.reduce_sum(tf.square(self.updated_img - self.G))
 
         self.g_loss_sum = scalar_summary("g_loss", self.g_loss)
