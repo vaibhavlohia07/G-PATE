@@ -642,7 +642,7 @@ class DCGAN(object):
 
         self.teachers_list = []
         for i in range(self.batch_teachers):
-            with tf.variable_scope("teacher%d" % i) as scope:
+            with tf.compat.v1.variable_scope("teacher%d" % i) as scope:
                 D, D_logits = self.discriminator(inputs, self.y)
 
                 scope.reuse_variables()
@@ -790,7 +790,7 @@ class DCGAN(object):
             # with open(outfile, 'wb') as f:
             #     pickle.dump(data, f)
             # current_scope = tf.contrib.framework.get_name_scope()
-            # with tf.variable_scope(current_scope, reuse=True):
+            # with tf.compat.v1.variable_scope(current_scope, reuse=True):
             #     biases = tf.get_variable("teacher0/d_h0_conv/biases")
             #     biases = tf.Print(biases, [biases])
             #     self.sess.run(biases)
@@ -1092,7 +1092,7 @@ class DCGAN(object):
         return tf.nn.sigmoid(h3), h3
 
     def generator(self, z, y):
-        with tf.variable_scope("generator") as scope:
+        with tf.compat.v1.variable_scope("generator") as scope:
             s_h, s_w = self.output_height, self.output_width
             s_h2, s_h4 = int(s_h / 2), int(s_h / 4)
             s_w2, s_w4 = int(s_w / 2), int(s_w / 4)
@@ -1199,7 +1199,7 @@ class DCGAN(object):
         counter = int(next(re.finditer("(\d+)(?!.*\d)", ckpt_name)).group(0))
         print(" [*] Success to read {}".format(ckpt_name))
         # current_scope = tf.contrib.framework.get_name_scope()
-        # with tf.variable_scope(current_scope, reuse=True):
+        # with tf.compat.v1.variable_scope(current_scope, reuse=True):
         #     biases = tf.get_variable("teacher0/d_h0_conv/biases")
         #     biases2 = tf.get_variable("teacher12/d_h0_conv/biases")
         #     biases3 = tf.get_variable("generator/g_h0_lin/Matrix")
