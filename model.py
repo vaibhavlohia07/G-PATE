@@ -538,7 +538,7 @@ class DCGAN(object):
 
         fd = open(os.path.join(data_dir, 'train-images-idx3-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        trX = loaded[16:].reshape((60000, 28, 28, 1)).astype(np.float)
+        trX = loaded[16:].reshape((60000, 28, 28, 1)).astype(np.float64)
 
         fd = open(os.path.join(data_dir, 'train-labels-idx1-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
@@ -546,7 +546,7 @@ class DCGAN(object):
 
         # fd = open(os.path.join(data_dir,'t10k-images-idx3-ubyte'))
         # loaded = np.fromfile(file=fd,dtype=np.uint8)
-        # teX = loaded[16:].reshape((10000,28,28,1)).astype(np.float)
+        # teX = loaded[16:].reshape((10000,28,28,1)).astype(np.float64)
 
         # fd = open(os.path.join(data_dir,'t10k-labels-idx1-ubyte'))
         # loaded = np.fromfile(file=fd,dtype=np.uint8)
@@ -566,7 +566,7 @@ class DCGAN(object):
         np.random.seed(seed)
         np.random.shuffle(y)
 
-        y_vec = np.zeros((len(y), self.y_dim), dtype=np.float)
+        y_vec = np.zeros((len(y), self.y_dim), dtype=np.float64)
         for i, label in enumerate(y):
             y_vec[i, y[i]] = 1.0
 
@@ -577,7 +577,7 @@ class DCGAN(object):
 
         fd = open(os.path.join(data_dir, 'train-images-idx3-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        trX = loaded[16:].reshape((60000, 28, 28, 1)).astype(np.float)
+        trX = loaded[16:].reshape((60000, 28, 28, 1)).astype(np.float64)
 
         fd = open(os.path.join(data_dir, 'train-labels-idx1-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
@@ -585,7 +585,7 @@ class DCGAN(object):
 
         # fd = open(os.path.join(data_dir,'t10k-images-idx3-ubyte'))
         # loaded = np.fromfile(file=fd,dtype=np.uint8)
-        # teX = loaded[16:].reshape((10000,28,28,1)).astype(np.float)
+        # teX = loaded[16:].reshape((10000,28,28,1)).astype(np.float64)
 
         # fd = open(os.path.join(data_dir,'t10k-labels-idx1-ubyte'))
         # loaded = np.fromfile(file=fd,dtype=np.uint8)
@@ -605,7 +605,7 @@ class DCGAN(object):
         np.random.seed(seed)
         np.random.shuffle(y)
 
-        y_vec = np.zeros((len(y), self.y_dim), dtype=np.float)
+        y_vec = np.zeros((len(y), self.y_dim), dtype=np.float64)
         for i, label in enumerate(y):
             y_vec[i, y[i]] = 1.0
 
@@ -714,7 +714,7 @@ class DCGAN(object):
 
     def get_random_labels(self, batch_size):
         # print(self.y_dim)
-        y_vec = np.zeros((batch_size, self.y_dim), dtype=np.float)
+        y_vec = np.zeros((batch_size, self.y_dim), dtype=np.float64)
         y = np.random.randint(0, self.y_dim, batch_size)
 
         for i, label in enumerate(y):
@@ -826,7 +826,7 @@ class DCGAN(object):
             print("Train %d idxs" % batch_idxs)
             for idx in xrange(0, batch_idxs):
 
-                batch_z = np.random.uniform(-1, 1, [self.batch_size, self.z_dim]).astype(np.float32)
+                batch_z = np.random.uniform(-1, 1, [self.batch_size, self.z_dim]).astype(np.float6432)
 
                 errD = 0
                 # train teacher models in batches, teachers_batch: how many batches of teacher
@@ -1131,13 +1131,13 @@ class DCGAN(object):
     def gen_data(self, n_batch, label=None):
         output_list = []
         for i in range(n_batch):
-            batch_z = np.random.uniform(-1, 1, [self.batch_size, self.z_dim]).astype(np.float32)
+            batch_z = np.random.uniform(-1, 1, [self.batch_size, self.z_dim]).astype(np.float6432)
 
             if self.y is not None:
                 if label is None:
                     batch_labels = self.get_random_labels(self.batch_size)
                 else:
-                    batch_labels = np.zeros((self.batch_size, self.y_dim), dtype=np.float)
+                    batch_labels = np.zeros((self.batch_size, self.y_dim), dtype=np.float64)
                     batch_labels[:, label] = 1.0
 
                 outputs = self.sess.run(self.G,
