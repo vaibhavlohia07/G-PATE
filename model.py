@@ -542,7 +542,7 @@ class DCGAN(object):
 
         fd = open(os.path.join(data_dir, 'train-labels-idx1-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        trY = loaded[8:].reshape((60000)).astype(np.int)
+        trY = loaded[8:].reshape((60000)).astype(int)
 
         # fd = open(os.path.join(data_dir,'t10k-images-idx3-ubyte'))
         # loaded = np.fromfile(file=fd,dtype=np.uint8)
@@ -550,15 +550,15 @@ class DCGAN(object):
 
         # fd = open(os.path.join(data_dir,'t10k-labels-idx1-ubyte'))
         # loaded = np.fromfile(file=fd,dtype=np.uint8)
-        # teY = loaded[8:].reshape((10000)).astype(np.int)
+        # teY = loaded[8:].reshape((10000)).astype(int)
 
         trY = np.asarray(trY)
         # teY = np.asarray(teY)
 
         # X = np.concatenate((trX, teX), axis=0)
-        # y = np.concatenate((trY, teY), axis=0).astype(np.int)
+        # y = np.concatenate((trY, teY), axis=0).astype(int)
         X = trX
-        y = trY.astype(np.int)
+        y = trY.astype(int)
 
         seed = 307
         np.random.seed(seed)
@@ -581,7 +581,7 @@ class DCGAN(object):
 
         fd = open(os.path.join(data_dir, 'train-labels-idx1-ubyte'))
         loaded = np.fromfile(file=fd, dtype=np.uint8)
-        trY = loaded[8:].reshape((60000)).astype(np.int)
+        trY = loaded[8:].reshape((60000)).astype(int)
 
         # fd = open(os.path.join(data_dir,'t10k-images-idx3-ubyte'))
         # loaded = np.fromfile(file=fd,dtype=np.uint8)
@@ -589,15 +589,15 @@ class DCGAN(object):
 
         # fd = open(os.path.join(data_dir,'t10k-labels-idx1-ubyte'))
         # loaded = np.fromfile(file=fd,dtype=np.uint8)
-        # teY = loaded[8:].reshape((10000)).astype(np.int)
+        # teY = loaded[8:].reshape((10000)).astype(int)
 
         trY = np.asarray(trY)
         # teY = np.asarray(teY)
 
         # X = np.concatenate((trX, teX), axis=0)
-        # y = np.concatenate((trY, teY), axis=0).astype(np.int)
+        # y = np.concatenate((trY, teY), axis=0).astype(int)
         X = trX
-        y = trY.astype(np.int)
+        y = trY.astype(int)
 
         seed = 307
         np.random.seed(seed)
