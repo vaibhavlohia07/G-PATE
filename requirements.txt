@@ -7,5 +7,6 @@ torchvision==0.5.0
 Keras==2.3.1
 scikit-learn==0.21.3
 Pillow==7.0.0
+requests=2.22.0
 tqdm==4.46.0
 joblib==0.13.2
