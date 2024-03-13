@@ -35,7 +35,7 @@ class batch_norm(object):
       self.bn = None
 
   def __call__(self, x, train=True):
-    return tf.contrib.layers.batch_norm(x,
+    return tf.compat.v1.estimator.layers.batch_norm(x,
                       decay=self.momentum, 
                       updates_collections=None,
                       epsilon=self.epsilon,
