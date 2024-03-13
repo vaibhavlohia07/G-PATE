@@ -35,7 +35,7 @@ class batch_norm(object):
       self.bn = None
 
   def __call__(self, x, train=True):
-    return tf.layers.batch_normalization(x,
+    return tf.compat.v1.layers.batch_normalization(x,
                       decay=self.momentum, 
                       updates_collections=None,
                       epsilon=self.epsilon,
