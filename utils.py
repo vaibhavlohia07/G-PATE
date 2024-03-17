@@ -45,9 +45,12 @@ def mapping():
         
         # Replace '/' with '_'
         fixed_name = fixed_name.replace('/', '_')
-        
+        assign_op = tf.compat.v1.assign(fixed_var, var)
+        sess.run(assign_op)
+
         # Create a new variable with the modified name and the same shape and initializer
-        fixed_var = tf.Variable(sess.run(var), name=fixed_name)
+        #fixed_var = tf.Variable(tf.zeros_like(var), name=fixed_name)
+        
     sess.close()
 
         
