@@ -40,8 +40,8 @@ def mapping():
         
         # Store the mapping of original name to fixed name
         name_mapping[original_name] = fixed_name
-
-    with tf.compat.v1.variable_scope('', reuse=True):
+    
+    with tf.compat.v1.variable_scope('', reuse=tf.compat.v1.AUTO_REUSE):
         # Iterate through all variables in the graph
         for var in tf.compat.v1.global_variables():
             # Check if the variable is trainable
@@ -53,13 +53,14 @@ def mapping():
                 if original_name in name_mapping:
                     # Get the corresponding fixed name
                     fixed_name = name_mapping[original_name]
+                    fixed_var = tf.Variable(var, name=fixed_name)
                     
-                    # Create a new variable with the fixed name and copy the value from the original variable
-                    fixed_var = tf.compat.v1.get_variable(fixed_name, shape=var.shape, initializer=tf.zeros_initializer())
-                    assign_op = fixed_var.assign(var)
+                    # # Create a new variable with the fixed name and copy the value from the original variable
+                    # fixed_var = tf.compat.v1.get_variable(fixed_name, shape=var.shape, initializer=tf.zeros_initializer())
+                    # assign_op = fixed_var.assign(var)
                     
-                    # Execute the assignment operation
-                    tf.compat.v1.keras.backend.get_session().run(assign_op)
+                    # # Execute the assignment operation
+                    # tf.compat.v1.keras.backend.get_session().run(assign_op)
                     
 def show_all_variables():
   model_vars = tf.compat.v1.trainable_variables()
