@@ -37,6 +37,8 @@ def mapping():
         # Get the original variable name
         original_name = var.name
         fixed_name = original_name.replace('/', '_')
+        fixed_name = fixed_name.replace(':', '_')
+
         
         # Store the mapping of original name to fixed name
         name_mapping[original_name] = fixed_name
