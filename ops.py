@@ -40,6 +40,7 @@ class batch_norm(object):
                       epsilon=self.epsilon,
                       scale=True,
                       trainable=train,
+                      axis=axis,
                       name=self.name)
 
 def conv_cond_concat(x, y):
