@@ -691,7 +691,7 @@ class DCGAN(object):
 
             self.teachers_list.append(teacher)
 
-        t_vars = tf.trainable_variables()
+        t_vars = tf.compat.v1.trainable_variables()
         g_list = tf.global_variables()
         add_save = [g for g in g_list if "moving_mean" in g.name]
         add_save += [g for g in g_list if "moving_variance" in g.name]
