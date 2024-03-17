@@ -42,7 +42,7 @@ def mapping():
         fixed_name = fixed_name.replace('/', '_')
         
         # Create a new variable with the modified name and the same shape and initializer
-        fixed_var = tf.Variable(var.initialized_value(), name=fixed_name)
+        fixed_var = tf.Variable(var.value(), name=fixed_name)
 
         
         # Store the mapping of original name to fixed name
