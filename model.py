@@ -761,13 +761,11 @@ class DCGAN(object):
             self.rdp_counter += rdp_budget
 
         d_optim_list = []
-
+        optimizer = tf.optimizers.Adam(learning_rate=config.learning_rate)
         for i in range(self.batch_teachers):
-            d_optim_list.append(tf.optimizers.Adam(config.learning_rate).minimize(
-                self.teachers_list[i]['d_loss'], var_list=self.d_vars[i]))
+            d_optim_list.append(optimizer.minimize(self.teachers_list[i]['d_loss'], var_list=self.d_vars[i]))
 
-        g_optim = tf.train.AdamOptimizer(config.learning_rate, beta1=config.beta1).minimize(self.g_loss,
-                                                                                            var_list=self.g_vars)
+        g_optim = tf.opttimizers.Adam(config.learning_rate).minimize(self.g_loss,var_list=self.g_vars)
 
         if not config.pretrain:
             try:
