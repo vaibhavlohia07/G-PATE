@@ -57,7 +57,7 @@ def conv2d(input_, output_dim,
        name="conv2d"):
   with tf.compat.v1.variable_scope(name):
     w = tf.compat.v1.get_variable('w', [k_h, k_w, input_.get_shape()[-1], output_dim],
-              initializer=tf.truncated_normal_initializer(stddev=stddev))
+              initializer=tf.random_normal_initializer(stddev=stddev))
     conv = tf.nn.conv2d(input_, w, strides=[1, d_h, d_w, 1], padding='SAME')
 
     biases = tf.compat.v1.get_variable('biases', [output_dim], initializer=tf.constant_initializer(0.0))
