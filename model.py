@@ -765,14 +765,13 @@ class DCGAN(object):
         original_name = "teacher0/d_h0_conv/w_0_momentum"
 
         # Replace '/' with '_'
-        fixed_name = original_name.replace('/', '_')
-        tf.Variable(initial_value=0.0, name=fixed_name)
+        print(self.name,tf.compat.v1.trainable_variables)
         for i in range(self.batch_teachers):
             #d_optim_list.append(optimizer.minimize(self.teachers_list[i]['d_loss'], var_list=self.d_vars[i]))
             with tf.GradientTape() as tape:
                 loss = self.teachers_list[i]['d_loss']
                 gradients = tape.gradient(loss, self.d_vars[i])
-            d_optim_list.append(optimizer.apply_gradients(zip(gradients, self.d_vars[i]),name=fixed_name))
+            d_optim_list.append(optimizer.apply_gradients(zip(gradients, self.d_vars[i])))
 
         g_optim = tf.opttimizers.Adam(config.learning_rate).minimize(self.g_loss,var_list=self.g_vars)
 
