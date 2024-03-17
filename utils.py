@@ -30,7 +30,37 @@ def mkdir(dir_name):
             os.mkdir(cur_dir)
         else:
             print("%s exists" % cur_dir)
+            
+def mapping():
+    name_mapping = {}
+    for var in tf.compat.v1.trainable_variables():
+        # Get the original variable name
+        original_name = var.name
+        fixed_name = original_name.replace('/', '_')
+        
+        # Store the mapping of original name to fixed name
+        name_mapping[original_name] = fixed_name
 
+    with tf.compat.v1.variable_scope('', reuse=True):
+        # Iterate through all variables in the graph
+        for var in tf.compat.v1.global_variables():
+            # Check if the variable is trainable
+            if var.trainable:
+                # Get the original name of the variable
+                original_name = var.name
+                
+                # Check if the original name is in the mapping
+                if original_name in name_mapping:
+                    # Get the corresponding fixed name
+                    fixed_name = name_mapping[original_name]
+                    
+                    # Create a new variable with the fixed name and copy the value from the original variable
+                    fixed_var = tf.compat.v1.get_variable(fixed_name, shape=var.shape, initializer=tf.zeros_initializer())
+                    assign_op = fixed_var.assign(var)
+                    
+                    # Execute the assignment operation
+                    tf.compat.v1.keras.backend.get_session().run(assign_op)
+                    
 def show_all_variables():
   model_vars = tf.compat.v1.trainable_variables()
   slim.model_analyzer.analyze_vars(model_vars, print_info=True)
