@@ -771,7 +771,7 @@ class DCGAN(object):
             with tf.GradientTape() as tape:
                 loss = self.teachers_list[i]['d_loss']
                 gradients = tape.gradient(loss, self.d_vars[i])
-            d_optim_list.append(optimizer.apply_gradients(zip(gradients, self.d_vars[i]),name=None))
+            d_optim_list.append(optimizer.apply_gradients(zip(gradients, self.d_vars[i])))
 
         g_optim = tf.opttimizers.Adam(config.learning_rate).minimize(self.g_loss,var_list=self.g_vars)
 
