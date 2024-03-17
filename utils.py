@@ -34,10 +34,10 @@ def mkdir(dir_name):
 def mapping():
     name_mapping = {}
     # Create a TensorFlow session
-    sess = tf.compat.v1.Session()
+    # sess = tf.compat.v1.Session()
     
-    # Initialize variables
-    sess.run(tf.compat.v1.global_variables_initializer())
+    # # Initialize variables
+    # sess.run(tf.compat.v1.global_variables_initializer())
     for var in tf.compat.v1.trainable_variables():
         # Get the original variable name
         split_name = var.name.split(':')
@@ -45,15 +45,17 @@ def mapping():
         
         # Replace '/' with '_'
         fixed_name = fixed_name.replace('/', '_')
-        fixed_var = tf.Variable(tf.zeros_like(var), name=fixed_name)
+        with tf.compat.v1.name_scope(''):
+             new_var = tf.identity(var, name=fixed_name)
+        # fixed_var = tf.Variable(tf.zeros_like(var), name=fixed_name)
 
-        assign_op = tf.compat.v1.assign(fixed_var, var)
-        sess.run(assign_op)
+        # assign_op = tf.compat.v1.assign(fixed_var, var)
+        # sess.run(assign_op)
 
         # Create a new variable with the modified name and the same shape and initializer
         #fixed_var = tf.Variable(tf.zeros_like(var), name=fixed_name)
         
-    sess.close()
+    #sess.close()
 
         
         # Store the mapping of original name to fixed name
