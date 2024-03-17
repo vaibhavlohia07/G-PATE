@@ -128,7 +128,7 @@ def main(_):
             small=FLAGS.small,
             config=FLAGS
         )
-        mapping()
+        #mapping()
         show_all_variables()
 
         if FLAGS.train:
