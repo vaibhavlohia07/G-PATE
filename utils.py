@@ -48,7 +48,7 @@ def mapping():
         
         # Create a new variable with the modified name and the same shape and initializer
         fixed_var = tf.Variable(sess.run(var), name=fixed_name)
-    sess.close(_
+    sess.close()
 
         
         # Store the mapping of original name to fixed name
