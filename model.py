@@ -763,7 +763,7 @@ class DCGAN(object):
         d_optim_list = []
 
         for i in range(self.batch_teachers):
-            d_optim_list.append(tf.optimizers.Adam(config.learning_rate, beta1=config.beta1).minimize(
+            d_optim_list.append(tf.optimizers.Adam(config.learning_rate).minimize(
                 self.teachers_list[i]['d_loss'], var_list=self.d_vars[i]))
 
         g_optim = tf.train.AdamOptimizer(config.learning_rate, beta1=config.beta1).minimize(self.g_loss,
