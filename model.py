@@ -708,9 +708,9 @@ class DCGAN(object):
         # print(self.d_save_vars)
         print(self.save_vars)
         # self.d_save_vars = {'k': v for k, v in zip(self.d_save_vars, self.d_save_vars)}
-        self.saver = tf.train.Saver(max_to_keep=5, var_list=self.save_vars)
-        self.saver_g = tf.train.Saver(max_to_keep=5, var_list=self.g_save_vars)
-        self.saver_d = tf.train.Saver(max_to_keep=self.teachers_batch, var_list=self.d_save_vars)
+        self.saver = tf.compat.v1.train.Saver(max_to_keep=5, var_list=self.save_vars)
+        self.saver_g = tf.comapt.v1.train.Saver(max_to_keep=5, var_list=self.g_save_vars)
+        self.saver_d = tf.compat.v1.train.Saver(max_to_keep=self.teachers_batch, var_list=self.d_save_vars)
 
     def get_random_labels(self, batch_size):
         # print(self.y_dim)
