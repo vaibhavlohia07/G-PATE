@@ -35,6 +35,8 @@ class batch_norm(object):
       self.bn = None
 
   def __call__(self, x, train=True):
+    data_format = tf.keras.backend.image_data_format()
+    axis = -1 if data_format == 'channels_last' else 1
     return tf.keras.layers.BatchNormalization(x,
                       momentum=self.momentum, 
                       epsilon=self.epsilon,
