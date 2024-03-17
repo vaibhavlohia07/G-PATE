@@ -766,7 +766,7 @@ class DCGAN(object):
 
         # Replace '/' with '_'
         fixed_name = original_name.replace('/', '_')
-        tf.Variable(..., name=fixed_name)
+        tf.Variable(initial_value=0.0, name=fixed_name)
         for i in range(self.batch_teachers):
             #d_optim_list.append(optimizer.minimize(self.teachers_list[i]['d_loss'], var_list=self.d_vars[i]))
             with tf.GradientTape() as tape:
