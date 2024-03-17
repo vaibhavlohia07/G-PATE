@@ -35,27 +35,32 @@ def mapping():
     name_mapping = {}
     for var in tf.compat.v1.trainable_variables():
         # Get the original variable name
-        original_name = var.name
-        fixed_name = original_name.replace('/', '_')
-        fixed_name = fixed_name.replace(':', '_')
+        split_name = var.name.split(':')
+        fixed_name = split_name[0]
+        
+        # Replace '/' with '_'
+        fixed_name = fixed_name.replace('/', '_')
+        
+        # Create a new variable with the modified name and the same shape and initializer
+        fixed_var = tf.Variable(var.initialized_value(), name=fixed_name)
 
         
         # Store the mapping of original name to fixed name
-        name_mapping[original_name] = fixed_name
+        #name_mapping[original_name] = fixed_name
     
-    with tf.compat.v1.variable_scope('', reuse=tf.compat.v1.AUTO_REUSE):
-        # Iterate through all variables in the graph
-        for var in tf.compat.v1.global_variables():
-            # Check if the variable is trainable
-            if var.trainable:
-                # Get the original name of the variable
-                original_name = var.name
+    # with tf.compat.v1.variable_scope('', reuse=tf.compat.v1.AUTO_REUSE):
+    #     # Iterate through all variables in the graph
+    #     for var in tf.compat.v1.global_variables():
+    #         # Check if the variable is trainable
+    #         if var.trainable:
+    #             # Get the original name of the variable
+    #             original_name = var.name
                 
-                # Check if the original name is in the mapping
-                if original_name in name_mapping:
-                    # Get the corresponding fixed name
-                    fixed_name = name_mapping[original_name]
-                    fixed_var = tf.Variable(var, name=fixed_name)
+    #             # Check if the original name is in the mapping
+    #             if original_name in name_mapping:
+    #                 # Get the corresponding fixed name
+    #                 fixed_name = name_mapping[original_name]
+    #                 fixed_var = tf.Variable(var, name=fixed_name)
                     
                     # # Create a new variable with the fixed name and copy the value from the original variable
                     # fixed_var = tf.compat.v1.get_variable(fixed_name, shape=var.shape, initializer=tf.zeros_initializer())
