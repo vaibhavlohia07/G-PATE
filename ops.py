@@ -37,13 +37,13 @@ class batch_norm(object):
   def __call__(self, x, train=True):
     data_format = tf.keras.backend.image_data_format()
     axis = -1 if data_format == 'channels_last' else 1
-    return tf.keras.layers.BatchNormalization(x,
+    return tf.keras.layers.BatchNormalization(
                       momentum=self.momentum, 
                       epsilon=self.epsilon,
                       scale=True,
                       trainable=train,
                       axis=axis,
-                      name=self.name)
+                      name=self.name)(x)
 
 def conv_cond_concat(x, y):
   """Concatenate conditioning vector on feature map axis."""
