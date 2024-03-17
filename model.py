@@ -693,7 +693,7 @@ class DCGAN(object):
 
         t_vars = tf.compat.v1.trainable_variables()
         for var in t_vars:
-            print(var.name)
+            #print(var.name)
             split_name = var.name.split(':')
             new_name = split_name[0].replace('/', '_')
             renamed_var = tf.Variable(var.value(), name=new_name)
