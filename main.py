@@ -3,7 +3,7 @@ import scipy.misc
 import numpy as np
 
 from model import DCGAN
-from utils import pp, visualize, to_json, show_all_variables, mkdir
+from utils import pp, visualize, to_json, show_all_variables, mkdir,mapping
 
 import tensorflow as tf
 import argparse
@@ -128,7 +128,7 @@ def main(_):
             small=FLAGS.small,
             config=FLAGS
         )
-
+        mapping()
         show_all_variables()
 
         if FLAGS.train:
