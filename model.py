@@ -630,7 +630,11 @@ class DCGAN(object):
 
         self.z = tf.compat.v1.placeholder(tf.float32, [self.batch_size, self.z_dim], name='z')
         self.z_sum = histogram_summary("z", self.z)
-
+        t_vars = tf.compat.v1.trainable_variables()
+        
+        for var in t_vars:
+            print(var.name)
+        
         self.G = self.generator(self.z, self.y)
         if 'slt' in self.dataset_name or 'cifar' in self.dataset_name:
             self.G_sum = image_summary("G", self.G, max_outputs=10)
