@@ -630,10 +630,6 @@ class DCGAN(object):
 
         self.z = tf.compat.v1.placeholder(tf.float32, [self.batch_size, self.z_dim], name='z')
         self.z_sum = histogram_summary("z", self.z)
-        t_vars = tf.compat.v1.trainable_variables()
-        
-        for var in t_vars:
-            print(var.name)
         
         self.G = self.generator(self.z, self.y)
         if 'slt' in self.dataset_name or 'cifar' in self.dataset_name:
@@ -1088,64 +1084,64 @@ class DCGAN(object):
     def discriminator(self, image, y):
         yb = tf.reshape(y, [self.batch_size, 1, 1, self.y_dim])
         x = conv_cond_concat(image, yb)
-    
-        h0 = lrelu(conv2d(x, self.c_dim + self.y_dim))
+
+        h0 = lrelu(conv2d(x, self.c_dim + self.y_dim, name='d_h0_conv'))
         h0 = conv_cond_concat(h0, yb)
-    
+
         if self.wgan:
-            h1 = lrelu(conv2d(h0, self.df_dim + self.y_dim))
+            h1 = lrelu(conv2d(h0, self.df_dim + self.y_dim, name='d_h1_conv'))
         else:
-            h1 = lrelu(self.d_bn1(conv2d(h0, self.df_dim + self.y_dim)))
-    
+            h1 = lrelu(self.d_bn1(conv2d(h0, self.df_dim + self.y_dim, name='d_h1_conv')))
+
         h1 = tf.reshape(h1, [self.batch_size, -1])
         h1 = concat([h1, y], 1)
-    
+
         if self.wgan:
-            h2 = lrelu(linear(h1, self.dfc_dim))
+            h2 = lrelu(linear(h1, self.dfc_dim, 'd_h2_lin'))
         else:
-            h2 = lrelu(self.d_bn2(linear(h1, self.dfc_dim)))
+            h2 = lrelu(self.d_bn2(linear(h1, self.dfc_dim, 'd_h2_lin')))
         h2 = concat([h2, y], 1)
 
-        h3 = linear(h2, 1)
-    
+        h3 = linear(h2, 1, 'd_h3_lin')
+
         return tf.nn.sigmoid(h3), h3
 
     def generator(self, z, y):
-        with tf.compat.v1.variable_scope("generator") as scope:
+        with tf.variable_scope("generator") as scope:
             s_h, s_w = self.output_height, self.output_width
             s_h2, s_h4 = int(s_h / 2), int(s_h / 4)
             s_w2, s_w4 = int(s_w / 2), int(s_w / 4)
-    
+
             # yb = tf.expand_dims(tf.expand_dims(y, 1),2)
             yb = tf.reshape(y, [self.batch_size, 1, 1, self.y_dim])
             z = concat([z, y], 1)
-    
+
             if self.wgan:
-                h0 = tf.nn.relu(linear(z, self.gfc_dim))
+                h0 = tf.nn.relu(linear(z, self.gfc_dim, 'g_h0_lin'))
             else:
-                h0 = tf.nn.relu(self.g_bn0(linear(z, self.gfc_dim)))
+                h0 = tf.nn.relu(self.g_bn0(linear(z, self.gfc_dim, 'g_h0_lin')))
             h0 = concat([h0, y], 1)
-    
+
             if self.wgan:
-                h1 = tf.nn.relu(linear(h0, self.gf_dim * 2 * s_h4 * s_w4))
+                h1 = tf.nn.relu(linear(h0, self.gf_dim * 2 * s_h4 * s_w4, 'g_h1_lin'))
             else:
-                h1 = tf.nn.relu(self.g_bn1(linear(h0, self.gf_dim * 2 * s_h4 * s_w4)))
+                h1 = tf.nn.relu(self.g_bn1(linear(h0, self.gf_dim * 2 * s_h4 * s_w4, 'g_h1_lin')))
             h1 = tf.reshape(h1, [self.batch_size, s_h4, s_w4, self.gf_dim * 2])
-    
+
             h1 = conv_cond_concat(h1, yb)
-    
+
             if self.wgan:
-                h2 = tf.nn.relu(deconv2d(h1, [self.batch_size, s_h2, s_w2, self.gf_dim * 2]))
+                h2 = tf.nn.relu(deconv2d(h1, [self.batch_size, s_h2, s_w2, self.gf_dim * 2], name='g_h2'))
             else:
                 h2 = tf.nn.relu(
-                    self.g_bn2(deconv2d(h1, [self.batch_size, s_h2, s_w2, self.gf_dim * 2])))
+                    self.g_bn2(deconv2d(h1, [self.batch_size, s_h2, s_w2, self.gf_dim * 2], name='g_h2')))
             h2 = conv_cond_concat(h2, yb)
-    
-            if self.config.tanh:
-                return (1 + tf.nn.tanh(deconv2d(h2, [self.batch_size, s_h, s_w, self.c_dim]))) / 2.
-            else:
-                return tf.nn.sigmoid(deconv2d(h2, [self.batch_size, s_h, s_w, self.c_dim]))
 
+            if self.config.tanh:
+                return (1 + tf.nn.tanh(deconv2d(h2, [self.batch_size, s_h, s_w, self.c_dim], name='g_h3'))) / 2.
+            else:
+                return tf.nn.sigmoid(deconv2d(h2, [self.batch_size, s_h, s_w, self.c_dim], name='g_h3'))
+    
     def gen_data(self, n_batch, label=None):
         output_list = []
         for i in range(n_batch):
