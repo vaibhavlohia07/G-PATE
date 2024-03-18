@@ -1107,7 +1107,7 @@ class DCGAN(object):
         return tf.nn.sigmoid(h3), h3
 
     def generator(self, z, y):
-        with tf.compat.v1.variable_scope("generator") as scope:
+        with tf.compat.v1.variable_scope("generator", reuse = True) as scope:
             s_h, s_w = self.output_height, self.output_width
             s_h2, s_h4 = int(s_h / 2), int(s_h / 4)
             s_w2, s_w4 = int(s_w / 2), int(s_w / 4)
