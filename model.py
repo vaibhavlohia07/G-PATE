@@ -1081,7 +1081,7 @@ class DCGAN(object):
 
         return self.dp_eps_list[-1], self.dp_delta
 
-    def discriminator(self, image, y):
+   def discriminator(self, image, y):
         yb = tf.reshape(y, [self.batch_size, 1, 1, self.y_dim])
         x = conv_cond_concat(image, yb)
 
@@ -1106,7 +1106,7 @@ class DCGAN(object):
 
         return tf.nn.sigmoid(h3), h3
 
-    def generator(self, z, y):
+   def generator(self, z, y):
         with tf.compat.v1.variable_scope("generator",reuse=tf.compat.v1.AUTO_REUSE) as scope:
             s_h, s_w = self.output_height, self.output_width
             s_h2, s_h4 = int(s_h / 2), int(s_h / 4)
@@ -1141,7 +1141,6 @@ class DCGAN(object):
                 return (1 + tf.nn.tanh(deconv2d(h2, [self.batch_size, s_h, s_w, self.c_dim]))) / 2.
             else:
                 return tf.nn.sigmoid(deconv2d(h2, [self.batch_size, s_h, s_w, self.c_dim]))
-
 
     def gen_data(self, n_batch, label=None):
         output_list = []
