@@ -694,13 +694,13 @@ class DCGAN(object):
         t_vars = tf.compat.v1.trainable_variables()
         for var in t_vars:
             print(var.name)
-            split_name = var.name.split(':')
-            print(split_name)
-            var.name = split_name[0].replace('/', '_')
-            print(var.name)
+            # split_name = var.name.split(':')
+            # print(split_name)
+            # var.name = split_name[0].replace('/', '_')
+            # print(var.name)
             # renamed_var = tf.Variable(var.value(), name=new_name)
             # tf.compat.v1.get_collection_ref(tf.compat.v1.GraphKeys.TRAINABLE_VARIABLES).remove(var)
-            print(var.name)
+            # print(var.name)
 
 
         g_list = tf.compat.v1.global_variables()
